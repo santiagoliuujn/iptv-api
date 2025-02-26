@@ -10,12 +10,13 @@ on:
       - gd
 jobs:
   push:
-    runs-on: ${{ matrix.operating-system }}
-    timeout-minutes: 120
-    strategy:
-      matrix:
-        operating-system: [ 'ubuntu-20.04' ]
+    runs-on: ubuntu-latest
     steps:
+    - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Run script
+        run: |
+          python your_script.py --flag Ture  # Correct this line
       - name: Set branch name
         id: vars
         run: echo "BRANCH_NAME=${{ github.repository_owner == 'Guovin' && 'gd' || 'master' }}" >> $GITHUB_ENV
@@ -25,7 +26,7 @@ jobs:
       - name: Run with setup-python 3.13
         uses: actions/setup-python@v4
         with:
-          python-version: '3.13'
+          python-version: '3.10'
           update-environment: true
           cache: 'pipenv'
       - name: Check open_driver config
